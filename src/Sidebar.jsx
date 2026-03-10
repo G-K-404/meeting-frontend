@@ -91,7 +91,7 @@ export default function Sidebar({ state, captionsRef }) {
         <section className="col">
           <h2 className="section-title">Summary</h2>
           <div className="section-scroll">
-            {renderStack(summaries, true, 'Waiting for summary updates...', true)}
+            {renderStack(summaries, true, 'Waiting for summary updates...', false)}
           </div>
         </section>
 
