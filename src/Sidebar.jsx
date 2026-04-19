@@ -38,11 +38,11 @@ function SectionStack({ list, isSummary = false, emptyLabel = 'No items yet' }) 
 
         return (
           <div
-            key={`${itemText}-${index}`}
+            key={isSummary ? String(item?.id || `${itemText}-${index}`) : `${itemText}-${index}`}
             className={`history-item ${isSummary ? 'summary-item' : 'non-summary-item'}`}
             style={!isSummary ? { opacity } : undefined}
           >
-            {timestamp ? <span className="item-timestamp">[{timestamp}]</span> : null}
+            {timestamp ? <span className="item-timestamp">[{formatSummaryTimestamp(timestamp)}]</span> : null}
             <span className="item-text" style={isSummary ? { opacity } : undefined}>
               {isSummary ? (
                 <BlurText
@@ -61,6 +61,20 @@ function SectionStack({ list, isSummary = false, emptyLabel = 'No items yet' }) 
       })}
     </div>
   )
+}
+
+function formatSummaryTimestamp(timestamp) {
+  if (!timestamp) return ''
+
+  const date = new Date(timestamp)
+  if (Number.isNaN(date.getTime())) {
+    return timestamp
+  }
+
+  return date.toLocaleTimeString('en-US', {
+    hour: '2-digit',
+    minute: '2-digit',
+  })
 }
 
 function ActionItems({ items, emptyLabel = 'No action items captured yet' }) {
